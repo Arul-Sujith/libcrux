@@ -2,7 +2,7 @@
 //!
 //! ### Example usage
 //! ```rust
-//! use libcrux_kats::wycheproof::mlkem::{ParameterSet, TestGroupType, MlKemTests};
+//! use libcrux_kats::wycheproof::mlkem::{ParameterSet, MlKemTests, TestGroupType};
 //!
 //! // load the tests for the ML-KEM-512 parameter set
 //! let tests = MlKemTests::load(ParameterSet::MlKem512, TestGroupType::MlKemTest);

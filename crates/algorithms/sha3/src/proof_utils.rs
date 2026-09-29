@@ -12,11 +12,6 @@ pub(crate) fn valid_rate(rate: usize) -> bool {
     rate != 0 && rate <= 200 && rate % 8 == 0 && (rate % 32 == 8 || rate % 32 == 16)
 }
 
-/// XOF state invariant: validates that buffer length and rate are valid.
-pub(crate) fn keccak_xof_state_inv(rate: usize, buf_len: usize) -> bool {
-    valid_rate(rate) && buf_len <= rate
-}
-
 pub(crate) use lemmas::{lemma_div_mul_mod, lemma_mul_succ_le};
 
 mod lemmas {
@@ -33,14 +28,17 @@ mod lemmas {
     ///
     /// This is used in the `squeeze` function to verify correct buffer indexing
     /// when squeezing multiple blocks.
-    #[hax_lib::fstar::replace(
-        r#"
+    #[cfg_attr(
+        hax,
+        hax_lib::fstar::replace(
+            r#"
 let lemma_div_mul_mod (a b: usize)
     : Lemma
         (requires b <>. mk_usize 0)
         (ensures (a /! b) *! b +! (a %! b) =. a)
     = ()
 "#
+        )
     )]
     pub(crate) fn lemma_div_mul_mod(_a: usize, _b: usize) {}
 
@@ -51,8 +49,10 @@ let lemma_div_mul_mod (a b: usize)
     ///
     /// This is used in the `keccak` functions to verify that block iterations
     /// stay within bounds.
-    #[hax_lib::fstar::replace(
-        r#"
+    #[cfg_attr(
+        hax,
+        hax_lib::fstar::replace(
+            r#"
 let rec lemma_mul_succ_le (k n d: usize)
   : Lemma
     (requires (v k) < (v n))
@@ -62,6 +62,7 @@ let rec lemma_mul_succ_le (k n d: usize)
   else if v k = v n - 1 then ()
   else lemma_mul_succ_le k (n -! mk_usize 1) d
 "#
+        )
     )]
     pub(crate) fn lemma_mul_succ_le(_k: usize, _n: usize, _d: usize) {}
 }

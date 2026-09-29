@@ -1,4 +1,4 @@
-SLOW_MODULES +=
+SLOW_MODULES += Libcrux_ml_kem.Vector.Rej_sample_table.fsti
 
 ADMIT_MODULES =  Libcrux_ml_kem.Sampling.fst \
 	      Libcrux_ml_kem.Ind_cpa.fst \
@@ -11,7 +11,6 @@ ADMIT_MODULES =  Libcrux_ml_kem.Sampling.fst \
               Libcrux_ml_kem.Vector.Neon.Vector_type.fst
 
 FSTAR_INCLUDE_DIRS_EXTRA += ../spec \
-	      $(shell git rev-parse --show-toplevel)/fstar-helpers/fstar-bitvec \
-	      $(shell git rev-parse --show-toplevel)/libcrux-intrinsics/proofs/fstar/extraction
+	      $(shell git rev-parse --show-toplevel)/fstar-helpers/fstar-bitvec
 
 include $(shell git rev-parse --show-toplevel)/fstar-helpers/Makefile.base

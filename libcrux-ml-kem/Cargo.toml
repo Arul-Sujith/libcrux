@@ -1,6 +1,6 @@
 [package]
 name = "libcrux-ml-kem"
-version = "0.0.9"
+version = "0.0.10"
 authors.workspace = true
 license.workspace = true
 homepage.workspace = true
@@ -28,10 +28,10 @@ libcrux-sha3.workspace = true
 libcrux-intrinsics.workspace = true
 libcrux-secrets.workspace = true
 libcrux-traits.workspace = true
+tls_codec = { workspace = true, optional = true }
+
+[target.'cfg(hax)'.dependencies]
 hax-lib.workspace = true
-tls_codec = { version = "0.4.2", features = [
-    "derive",
-], default-features = false, optional = true }
 
 [features]
 # By default all variants and std are enabled.
@@ -59,7 +59,7 @@ kyber = []
 rand = ["dep:rand"]
 
 # std support
-std = ["alloc", "rand/std", "tls_codec/std"]
+std = ["alloc", "rand/std", "tls_codec?/std"]
 alloc = []
 
 # Incremental encapsulation API
